@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bogdan — Python Developer. Telegram-боты, простые сайты, Python-скрипты, автоматизация и интеграции с ИИ.">
+  <meta name="theme-color" content="#f5f8fc">
+  <title>Bogdan — Python Developer</title>
+  <style>
+    :root {
+      --bg: #f5f8fc;
+      --surface: #ffffff;
+      --text: #15243a;
+      --muted: #607086;
+      --line: #e1e8f1;
+      --blue: #1e5ed8;
+      --blue-dark: #1748a8;
+      --pale: #eaf1ff;
+      --shadow: 0 18px 50px rgba(25, 53, 92, .08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 22px 0; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { font-weight: 800; letter-spacing: -.04em; font-size: 1.15rem; }
+    .brand span { color: var(--blue); }
+    .nav-right { display:flex; align-items:center; gap:24px; }
+    .nav-links { display:flex; gap:22px; color:var(--muted); font-size:.94rem; }
+    .nav-links a:hover { color:var(--blue); }
+    .lang-toggle {
+      border:1px solid var(--line); background:var(--surface); color:var(--text);
+      border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:700;
+    }
+    .hero { padding: 72px 0 62px; }
+    .hero-grid { display:grid; grid-template-columns: 1.25fr .75fr; align-items:center; gap:50px; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:9px; border:1px solid #d8e4fb;
+      color:var(--blue-dark); background:#eef4ff; border-radius:999px; padding:7px 12px;
+      font-size:.85rem; font-weight:700;
+    }
+    .dot { width:8px; height:8px; border-radius:50%; background:#2eaf72; }
+    h1 { font-size:clamp(2.65rem, 6vw, 4.6rem); line-height:1.04; letter-spacing:-.065em; margin:22px 0 20px; }
+    h1 span { color:var(--blue); }
+    .hero p { max-width:650px; font-size:1.12rem; color:var(--muted); margin:0 0 28px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:9px;
+      padding:13px 18px; border-radius:13px; font-weight:750; transition:.18s ease;
+      border:1px solid transparent;
+    }
+    .btn-primary { color:#fff; background:var(--blue); box-shadow:0 8px 20px rgba(30,94,216,.18); }
+    .btn-primary:hover { background:var(--blue-dark); transform:translateY(-1px); }
+    .btn-secondary { background:#fff; border-color:var(--line); }
+    .btn-secondary:hover { border-color:#b8cbed; transform:translateY(-1px); }
+    .hero-card {
+      background:linear-gradient(145deg,#fff,#edf3ff); border:1px solid #e0e8f7;
+      border-radius:28px; padding:28px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+    }
+    .hero-card:before {
+      content:""; position:absolute; width:220px; height:220px; border-radius:50%;
+      background:rgba(55,115,230,.08); right:-70px; top:-80px;
+    }
+    .code-window { position:relative; background:#17243a; border-radius:17px; padding:18px; color:#e6efff; box-shadow:0 12px 28px rgba(18,35,61,.15); }
+    .window-top { display:flex; gap:6px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,.12); margin-bottom:16px; }
+    .window-top i { width:8px; height:8px; border-radius:50%; background:#8495b0; }
+    .code-line { font: .88rem/1.9 ui-monospace, SFMono-Regular, Menlo, monospace; white-space:nowrap; }
+    .code-line .key { color:#8fb5ff; } .code-line .value { color:#b8e7c7; } .code-line .comment { color:#9aaac2; }
+    .mini-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; position:relative; }
+    .mini-stat { background:#fff; border:1px solid var(--line); border-radius:15px; padding:13px; }
+    .mini-stat strong { display:block; font-size:1.2rem; letter-spacing:-.03em; }
+    .mini-stat span { color:var(--muted); font-size:.82rem; }
+    section { padding:52px 0; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:25px; margin-bottom:28px; }
+    .section-kicker { color:var(--blue); text-transform:uppercase; letter-spacing:.12em; font-size:.76rem; font-weight:800; }
+    h2 { font-size:clamp(1.9rem,4vw,2.8rem); line-height:1.15; letter-spacing:-.05em; margin:8px 0 0; }
+    .section-head p { max-width:440px; color:var(--muted); margin:0; }
+    .projects { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+    .project {
+      background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+      padding:22px; box-shadow:0 8px 26px rgba(25,53,92,.035); display:flex; flex-direction:column;
+      min-height:100%;
+    }
+    .project:hover { box-shadow:var(--shadow); transform:translateY(-3px); transition:.2s ease; }
+    .project-icon {
+      width:48px; height:48px; display:grid; place-items:center; border-radius:15px;
+      background:var(--pale); color:var(--blue); font-size:1.25rem; font-weight:900; margin-bottom:20px;
+    }
+    .project h3 { font-size:1.25rem; letter-spacing:-.03em; margin:0 0 9px; }
+    .project p { color:var(--muted); font-size:.95rem; margin:0 0 17px; }
+    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:20px; }
+    .tag { font-size:.76rem; padding:5px 9px; border-radius:8px; color:#40536d; background:#f1f4f8; }
+    .features { padding:0; margin:0 0 22px; list-style:none; color:#34465d; font-size:.9rem; }
+    .features li { margin:7px 0; display:flex; gap:8px; }
+    .features li:before { content:"✓"; color:var(--blue); font-weight:900; }
+    .project .btn { margin-top:auto; width:100%; }
+    .note { color:var(--muted); font-size:.87rem; margin-top:18px; }
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .service { padding:23px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.7); }
+    .service h3 { margin:0 0 8px; font-size:1.08rem; }
+    .service p { color:var(--muted); margin:0; font-size:.94rem; }
+    .process { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .step { border-top:2px solid #cddcf5; padding:18px 4px 0; }
+    .step-number { color:var(--blue); font-weight:850; font-size:.82rem; letter-spacing:.08em; }
+    .step h3 { margin:8px 0; }
+    .step p { color:var(--muted); font-size:.94rem; margin:0; }
+    .contact-box {
+      background:#172b4d; color:#fff; border-radius:28px; padding:clamp(28px,5vw,52px);
+      display:flex; justify-content:space-between; align-items:center; gap:30px; overflow:hidden; position:relative;
+    }
+    .contact-box:after { content:""; position:absolute; width:280px; height:280px; border-radius:50%; border:50px solid rgba(255,255,255,.045); right:-65px; top:-120px; }
+    .contact-box h2 { max-width:590px; position:relative; }
+    .contact-box p { color:#c7d4e8; max-width:590px; margin:15px 0 0; position:relative; }
+    .contact-box .btn { background:#fff; color:#172b4d; white-space:nowrap; position:relative; z-index:1; }
+    footer { padding:28px 0 35px; color:var(--muted); font-size:.86rem; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px solid var(--line); padding-top:22px; }
+    .footer-links { display:flex; gap:18px; }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns:1fr; gap:34px; }
+      .hero-card { max-width:600px; }
+      .services-grid { grid-template-columns:1fr 1fr; }
+      .section-head { align-items:start; flex-direction:column; }
+    }
+    @media (max-width: 620px) {
+      .container { width:min(100% - 28px,1120px); }
+      header { padding:16px 0; }
+      .nav-links { display:none; }
+      .hero { padding:45px 0 38px; }
+      section { padding:46px 0; }
+      .projects,.services-grid,.process { grid-template-columns:1fr; }
+      .contact-box { align-items:flex-start; flex-direction:column; }
+      .footer-inner { align-items:flex-start; flex-direction:column; }
+      .code-line { font-size:.77rem; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#top">Bogdan<span>.</span></a>
+    <div class="nav-right">
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#projects" data-i18n="navProjects">Проекты</a>
+        <a href="#services" data-i18n="navServices">Услуги</a>
+        <a href="#contact" data-i18n="navContact">Контакты</a>
+      </nav>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Python-разработчик · боты · сайты · автоматизация</span></div>
+        <h1 data-i18n="heroTitle">Разрабатываю цифровые решения <span>под ваши задачи</span></h1>
+        <p data-i18n="heroText">Создаю Telegram-ботов, простые адаптивные сайты и Python-скрипты для автоматизации задач. Также работаю с API и интеграциями ИИ — подбираю решение под масштаб и требования проекта.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects" data-i18n="viewProjects">Посмотреть проекты <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-secondary" href="https://t.me/dark_baga7" target="_blank" rel="noopener noreferrer" data-i18n="contactMe">Обсудить проект</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Developer profile">
+        <div class="code-window">
+          <div class="window-top"><i></i><i></i><i></i></div>
+          <div class="code-line"><span class="comment"># build useful automation</span></div>
+          <div class="code-line"><span class="key">developer</span> = <span class="value">"Bogdan"</span></div>
+          <div class="code-line"><span class="key">language</span> = <span class="value">"Python"</span></div>
+          <div class="code-line"><span class="key">platform</span> = <span class="value">"Telegram"</span></div>
+          <div class="code-line"><span class="key">focus</span> = [<span class="value">"bots"</span>, <span class="value">"automation"</span>, <span class="value">"AI"</span>]</div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat"><strong>Python</strong><span data-i18n="statProjects">скрипты, логика и автоматизация</span></div>
+          <div class="mini-stat"><strong>Web + API</strong><span data-i18n="statStack">сайты и интеграции</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-kicker" data-i18n="projectsKicker">Портфолио</div><h2 data-i18n="projectsTitle">Проекты в действии</h2></div>
+        <p data-i18n="projectsIntro">Это демонстрационные проекты, которые показывают подход к автоматизации и могут служить основой для индивидуальной разработки.</p>
+      </div>
+      <div class="projects">
+        <article class="project">
+          <div class="project-icon">✂</div>
+          <h3 data-i18n="barberTitle">Онлайн-запись в барбершоп</h3>
+          <p data-i18n="barberDesc">Telegram-бот, который проводит клиента через выбор услуги, мастера и свободного временного слота.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">aiogram 3</span><span class="tag">SQLite</span></div>
+          <ul class="features">
+            <li data-i18n="barberFeature1">Выбор услуги, мастера, даты и времени</li>
+            <li data-i18n="barberFeature2">Подтверждение перед завершением записи</li>
+            <li data-i18n="barberFeature3">Раздел «Мои записи»</li>
+          </ul>
+          <a class="btn btn-primary" href="https://t.me/barberbagabot" target="_blank" rel="noopener noreferrer" data-i18n="openBot">Открыть Telegram-бота ↗</a>
+        </article>
+        <article class="project">
+          <div class="project-icon">🛍</div>
+          <h3 data-i18n="shopTitle">Магазин одежды в Telegram</h3>
+          <p data-i18n="shopDesc">Демонстрационный магазин с каталогом товаров, карточками, выбором размера и корзиной.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">aiogram 3</span><span class="tag">SQLite</span></div>
+          <ul class="features">
+            <li data-i18n="shopFeature1">5 категорий и 25 демонстрационных товаров</li>
+            <li data-i18n="shopFeature2">Фото, цены, размеры и корзина</li>
+            <li data-i18n="shopFeature3">Сохранение заказов и админ-команды для товаров</li>
+          </ul>
+          <a class="btn btn-primary" href="https://t.me/shopbagabot" target="_blank" rel="noopener noreferrer" data-i18n="openBot">Открыть Telegram-бота ↗</a>
+        </article>
+        <article class="project">
+          <div class="project-icon">✳</div>
+          <h3 data-i18n="aiTitle">ИИ-ассистент на Gemini</h3>
+          <p data-i18n="aiDesc">Telegram-бот с интеграцией Google Gemini API для ответов на текстовые запросы пользователей.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Google Gemini API</span><span class="tag">Telegram</span></div>
+          <ul class="features">
+            <li data-i18n="aiFeature1">Обработка текстовых запросов</li>
+            <li data-i18n="aiFeature2">Генерация ответов с помощью Gemini</li>
+            <li data-i18n="aiFeature3">Возможность расширения под задачи заказчика</li>
+          </ul>
+          <a class="btn btn-primary" href="https://t.me/aibagabot" target="_blank" rel="noopener noreferrer" data-i18n="openBot">Открыть Telegram-бота ↗</a>
+        </article>
+        <article class="project">
+          <div class="project-icon">⌘</div>
+          <h3 data-i18n="webTitle">Адаптивный веб-сайт</h3>
+          <p data-i18n="webDesc">Пример простого сайта с современным оформлением, адаптацией под телефон и компьютеры, а также переключением языка.</p>
+          <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+          <ul class="features">
+            <li data-i18n="webFeature1">Адаптивная вёрстка для разных экранов</li>
+            <li data-i18n="webFeature2">Интерактивные элементы и переключение RU/EN</li>
+            <li data-i18n="webFeature3">Подготовка к размещению на VPS</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact" data-i18n="discussWebsite">Обсудить похожий сайт ↗</a>
+        </article>
+      </div>
+      <p class="note" data-i18n="projectNote">Функции в демонстрационных ботах могут отличаться от возможностей индивидуального решения. Дополнительные функции обсуждаются и оцениваются отдельно.</p>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-kicker" data-i18n="servicesKicker">Чем могу помочь</div><h2 data-i18n="servicesTitle">Разработка под задачу</h2></div>
+        <p data-i18n="servicesIntro">Состав и стоимость проекта определяются после обсуждения требований и необходимого функционала.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service"><h3 data-i18n="service1Title">Telegram-боты</h3><p data-i18n="service1Desc">Запись клиентов, ответы на частые вопросы, формы заявок и другие сценарии взаимодействия.</p></div>
+        <div class="service"><h3 data-i18n="service2Title">Простые сайты и лендинги</h3><p data-i18n="service2Desc">Одностраничные сайты, портфолио, страницы услуг и небольшие сайты-визитки с адаптацией под мобильные устройства.</p></div>
+        <div class="service"><h3 data-i18n="service3Title">Python-скрипты и автоматизация</h3><p data-i18n="service3Desc">Небольшие программы для обработки данных, работы с файлами, повторяющихся операций и решения повседневных задач.</p></div>
+        <div class="service"><h3 data-i18n="service4Title">Магазины и каталоги</h3><p data-i18n="service4Desc">Каталоги товаров, корзины, оформление заказов и инструменты управления контентом.</p></div>
+        <div class="service"><h3 data-i18n="service5Title">Интеграции с API и ИИ</h3><p data-i18n="service5Desc">Связь с внешними сервисами, подключение API и ИИ-моделей для конкретных сценариев.</p></div>
+        <div class="service"><h3 data-i18n="service6Title">Небольшие утилиты</h3><p data-i18n="service6Desc">Консольные инструменты, конвертеры, парсеры данных и другие небольшие программы по согласованному техническому заданию.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-kicker" data-i18n="processKicker">Процесс</div><h2 data-i18n="processTitle">От идеи до запуска</h2></div>
+      </div>
+      <div class="process">
+        <div class="step"><div class="step-number">01 / BRIEF</div><h3 data-i18n="step1Title">Обсуждаем задачу</h3><p data-i18n="step1Desc">Уточняем цель, пользователей, нужные функции и ограничения.</p></div>
+        <div class="step"><div class="step-number">02 / BUILD</div><h3 data-i18n="step2Title">Согласуем решение</h3><p data-i18n="step2Desc">Определяем функционал, сроки и стоимость до начала работы.</p></div>
+        <div class="step"><div class="step-number">03 / LAUNCH</div><h3 data-i18n="step3Title">Тестируем и запускаем</h3><p data-i18n="step3Desc">Проверяем основные сценарии и согласуем порядок дальнейшей поддержки.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <div>
+          <div class="section-kicker" style="color:#9fc0ff" data-i18n="contactKicker">Есть идея?</div>
+          <h2 data-i18n="contactTitle">Давайте обсудим ваш проект</h2>
+          <p data-i18n="contactText">Напишите мне в Telegram: расскажите, какую задачу нужно решить, и мы обсудим возможный вариант реализации.</p>
+        </div>
+        <a class="btn" href="https://t.me/dark_baga7" target="_blank" rel="noopener noreferrer" data-i18n="contactButton">Написать в Telegram ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Bogdan · <span data-i18n="footerRole">Python Developer</span></div>
+    <div class="footer-links"><a href="https://t.me/dark_baga7" target="_blank" rel="noopener noreferrer">Telegram</a><a href="#top" data-i18n="backTop">Наверх ↑</a></div>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  ru: {
+    navProjects:"Проекты", navServices:"Услуги", navContact:"Контакты",
+    eyebrow:"Python-разработчик · боты · сайты · автоматизация",
+    heroTitle:'Разрабатываю цифровые решения <span>под ваши задачи</span>',
+    heroText:"Создаю Telegram-ботов, простые адаптивные сайты и Python-скрипты для автоматизации задач. Также работаю с API и интеграциями ИИ — подбираю решение под масштаб и требования проекта.",
+    viewProjects:"Посмотреть проекты", contactMe:"Обсудить проект",
+    statProjects:"скрипты, логика и автоматизация", statStack:"сайты и интеграции",
+    projectsKicker:"Портфолио", projectsTitle:"Проекты в действии",
+    projectsIntro:"Это демонстрационные проекты, которые показывают подход к автоматизации и могут служить основой для индивидуальной разработки.",
+    barberTitle:"Онлайн-запись в барбершоп", barberDesc:"Telegram-бот, который проводит клиента через выбор услуги, мастера и свободного временного слота.",
+    barberFeature1:"Выбор услуги, мастера, даты и времени", barberFeature2:"Подтверждение перед завершением записи", barberFeature3:"Раздел «Мои записи»",
+    shopTitle:"Магазин одежды в Telegram", shopDesc:"Демонстрационный магазин с каталогом товаров, карточками, выбором размера и корзиной.",
+    shopFeature1:"5 категорий и 25 демонстрационных товаров", shopFeature2:"Фото, цены, размеры и корзина", shopFeature3:"Сохранение заказов и админ-команды для товаров",
+    aiTitle:"ИИ-ассистент на Gemini", aiDesc:"Telegram-бот с интеграцией Google Gemini API для ответов на текстовые запросы пользователей.",
+    aiFeature1:"Обработка текстовых запросов", aiFeature2:"Генерация ответов с помощью Gemini", aiFeature3:"Возможность расширения под задачи заказчика",
+    webTitle:"Адаптивный сайт-портфолио", webDesc:"Пример простого сайта с современным оформлением, адаптацией под телефон и компьютеры, а также переключением языка.", webFeature1:"Адаптивная вёрстка для разных экранов", webFeature2:"Интерактивные элементы и переключение RU/EN", webFeature3:"Подготовка к размещению на VPS", discussWebsite:"Обсудить похожий сайт ↗",
+    openBot:"Открыть Telegram-бота ↗", projectNote:"Функции в демонстрационных ботах могут отличаться от возможностей индивидуального решения. Дополнительные функции обсуждаются и оцениваются отдельно.",
+    servicesKicker:"Чем могу помочь", servicesTitle:"Разработка под задачу",
+    servicesIntro:"Состав и стоимость проекта определяются после обсуждения требований и необходимого функционала.",
+    service1Title:"Telegram-боты", service1Desc:"Запись клиентов, ответы на частые вопросы, формы заявок и другие сценарии взаимодействия.",
+    service2Title:"Простые сайты и лендинги", service2Desc:"Одностраничные сайты, портфолио, страницы услуг и небольшие сайты-визитки с адаптацией под мобильные устройства.",
+    service3Title:"Python-скрипты и автоматизация", service3Desc:"Небольшие программы для обработки данных, работы с файлами, повторяющихся операций и решения повседневных задач.",
+    service4Title:"Магазины и каталоги", service4Desc:"Каталоги товаров, корзины, оформление заказов и инструменты управления контентом.",
+    service5Title:"Интеграции с API и ИИ", service5Desc:"Связь с внешними сервисами, подключение API и ИИ-моделей для конкретных сценариев.",
+    service6Title:"Небольшие утилиты", service6Desc:"Консольные инструменты, конвертеры, парсеры данных и другие небольшие программы по согласованному техническому заданию.",
+    processKicker:"Процесс", processTitle:"От идеи до запуска",
+    step1Title:"Обсуждаем задачу", step1Desc:"Уточняем цель, пользователей, нужные функции и ограничения.",
+    step2Title:"Согласуем решение", step2Desc:"Определяем функционал, сроки и стоимость до начала работы.",
+    step3Title:"Тестируем и запускаем", step3Desc:"Проверяем основные сценарии и согласуем порядок дальнейшей поддержки.",
+    contactKicker:"Есть идея?", contactTitle:"Давайте обсудим ваш проект",
+    contactText:"Напишите мне в Telegram: расскажите, какую задачу нужно решить, и мы обсудим возможный вариант реализации.",
+    contactButton:"Написать в Telegram ↗", footerRole:"Python-разработчик", backTop:"Наверх ↑"
+  },
+  en: {
+    navProjects:"Projects", navServices:"Services", navContact:"Contact",
+    eyebrow:"Python Developer · Bots · Websites · Automation",
+    heroTitle:'I build practical digital tools <span>for your needs</span>',
+    heroText:"I build Telegram bots, simple responsive websites, and Python scripts to automate tasks. I also work with APIs and AI integrations, tailoring the solution to the project scope and requirements.",
+    viewProjects:"Explore projects", contactMe:"Discuss a project",
+    statProjects:"scripts, logic, and automation", statStack:"websites and integrations",
+    projectsKicker:"Portfolio", projectsTitle:"Projects in action",
+    projectsIntro:"These demo projects showcase practical automation workflows and can serve as a starting point for custom development.",
+    barberTitle:"Barbershop Booking Bot", barberDesc:"A Telegram bot that guides customers through choosing a service, barber, date, and available time slot.",
+    barberFeature1:"Choose service, barber, date, and time", barberFeature2:"Review details before confirming", barberFeature3:"A “My Bookings” section",
+    shopTitle:"Telegram Clothing Shop", shopDesc:"A demo shop with a product catalog, product cards, size selection, and a shopping cart.",
+    shopFeature1:"5 categories and 25 demo products", shopFeature2:"Photos, prices, sizes, and cart", shopFeature3:"Order storage and product admin commands",
+    aiTitle:"Gemini AI Assistant", aiDesc:"A Telegram bot integrated with the Google Gemini API to answer users' text prompts.",
+    aiFeature1:"Processes text prompts", aiFeature2:"Generates answers with Gemini", aiFeature3:"Can be extended for client-specific use cases",
+    webTitle:"Responsive Portfolio Website", webDesc:"An example of a simple website with a modern layout, mobile and desktop support, and a language switcher.", webFeature1:"Responsive layout for different screens", webFeature2:"Interactive elements and RU/EN switch", webFeature3:"Prepared for deployment on a VPS", discussWebsite:"Discuss a similar website ↗",
+    openBot:"Open Telegram bot ↗", projectNote:"Demo bot features may differ from a custom production solution. Additional functionality is discussed and scoped separately.",
+    servicesKicker:"What I can help with", servicesTitle:"Development tailored to your needs",
+    servicesIntro:"Project scope and pricing are determined after discussing requirements and the necessary functionality.",
+    service1Title:"Telegram bots", service1Desc:"Appointment booking, FAQs, lead forms, and other customer interaction workflows.",
+    service2Title:"Simple websites and landing pages", service2Desc:"One-page websites, portfolios, service pages, and small business websites with mobile-friendly layouts.",
+    service3Title:"Python scripts and automation", service3Desc:"Small programs for data processing, file handling, repetitive operations, and everyday tasks.",
+    service4Title:"Shops and catalogs", service4Desc:"Product catalogs, shopping carts, order flows, and content management tools.",
+    service5Title:"API and AI integrations", service5Desc:"Connecting external services, APIs, and AI models for specific workflows.",
+    service6Title:"Small utilities", service6Desc:"Command-line tools, converters, data parsers, and other small programs based on an agreed specification.",
+    processKicker:"Process", processTitle:"From idea to launch",
+    step1Title:"Discuss the goal", step1Desc:"Clarify the objective, users, required features, and constraints.",
+    step2Title:"Agree on the solution", step2Desc:"Define scope, timeline, and price before development begins.",
+    step3Title:"Test and launch", step3Desc:"Check key workflows and agree on any ongoing support.",
+    contactKicker:"Have an idea?", contactTitle:"Let's discuss your project",
+    contactText:"Message me on Telegram, describe the task you want to solve, and we can discuss a possible implementation.",
+    contactButton:"Message on Telegram ↗", footerRole:"Python Developer", backTop:"Back to top ↑"
+  }
+};
+let currentLang = "ru";
+const langToggle = document.getElementById("langToggle");
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang][key]) el.innerHTML = translations[lang][key];
+  });
+  langToggle.textContent = lang === "ru" ? "EN" : "RU";
+  document.title = lang === "ru" ? "Bogdan — Python Developer" : "Bogdan — Python Developer";
+}
+langToggle.addEventListener("click", () => setLanguage(currentLang === "ru" ? "en" : "ru"));
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
